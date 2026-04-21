@@ -7,7 +7,7 @@ import (
 	"strconv"
 )
 
-func getBalanceFromFile(filename string) (float64, error){
+func GetBalanceFromFile(filename string) (float64, error){
 	data, readErr := os.ReadFile(filename);
 
 	if readErr != nil {
@@ -24,7 +24,7 @@ func getBalanceFromFile(filename string) (float64, error){
 	return value, nil
 }
 
-func writeDataToFile(filename string, balance float64) {
+func WriteDataToFile(filename string, balance float64) {
 	valueText := fmt.Sprint(balance)
 	os.WriteFile(filename, []byte(valueText), 0644)
 }
