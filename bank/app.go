@@ -14,7 +14,8 @@ func main() {
 	if err != nil {
 		fmt.Println("ERROR", err)
 	}
-	fmt.Println("Welcome to Go Bank!", randomdata.PhoneNumber())
+	fmt.Println("Welcome to Go Bank!")
+	fmt.Println("Reach us 24/7", randomdata.PhoneNumber())
 	fmt.Println("What do you want to do?")
 	for {
 		fmt.Println("1. Check Balance")
