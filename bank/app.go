@@ -1,38 +1,15 @@
 package main
 
 import (
-	"errors"
 	"fmt"
-	"os"
-	"strconv"
+
+	"ashutosh.com/bank/fileops"
 )
 
 const accountBalanceFile = "balance.txt"
 
-func getBalanceFromFile() (float64, error){
-	data, readErr := os.ReadFile(accountBalanceFile);
-
-	if readErr != nil {
-		return 0, errors.New("Failed to find balance file!")
-	}
-
-	balanceText := string(data);
-	balance, parseErr := strconv.ParseFloat(balanceText, 64)
-
-	if parseErr != nil {
-		return 0, errors.New("Failed to parse stored balance!")
-	}
-
-	return balance, nil
-}
-
-func writeDataToFile(balance float64) {
-	balanceText := fmt.Sprint(balance)
-	os.WriteFile(accountBalanceFile, []byte(balanceText), 0644)
-}
-
 func main() {
-	accountBalance, err := getBalanceFromFile()
+	accountBalance, err := fileops.GetBalanceFromFile(accountBalanceFile)
 	if err != nil {
 		fmt.Println("ERROR", err)
 		panic("Can't continue, sorry!")
@@ -62,7 +39,7 @@ func main() {
 				continue
 			}
 			accountBalance += depositAmount
-			writeDataToFile(accountBalance)
+			fileops.WriteDataToFile(accountBalanceFile, accountBalance)
 			fmt.Println("Balance updated! New Amount:", accountBalance)
 		case 3:
 			fmt.Println("How much do you want to withdraw?")
@@ -80,7 +57,8 @@ func main() {
 			}
 
 			accountBalance -= withdrawalAmount
-			writeDataToFile(accountBalance)
+			fileops.WriteDataToFile(accountBalanceFile, accountBalance)
+
 			fmt.Println("Balance updated! New Amount:", accountBalance)
 		default:
 			fmt.Println("Goodbye!")
